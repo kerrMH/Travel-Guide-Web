@@ -1,0 +1,38 @@
+{
+  "entryPagePath": "pages/profile/profile",
+  "pages": [
+    "pages/index/index",
+    "pages/profile/profile",
+    "pages/home/home"
+  ],
+  "window": {
+    "navigationBarBackgroundColor":"#c6e2ff",
+    "backgroundTextStyle":"dark",
+    "navigationBarTextStyle":"black",
+    "navigationBarTitleText": "旅游手册",
+    "enablePullDownRefresh": true,
+    "backgroundColor": "#ccffff"
+  },
+  "style": "v2",
+  "componentFramework": "glass-easel",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents",
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/home/home",
+        "text": "首页",
+        "iconPath": "assets/"
+      },
+      {
+      "pagePath": "pages/index/index",
+      "text": "text"
+    },
+  {
+    "pagePath": "pages/profile/profile",
+    "text": "我的"
+  }
+ 
+]
+  }
+}
