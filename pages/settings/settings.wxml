@@ -1,0 +1,121 @@
+<view class="settings-container">
+  <view class="settings-header">
+    <text class="header-title">设置</text>
+  </view>
+  
+  <view class="settings-list">
+    <!-- 账户与安全 -->
+    <view class="settings-group">
+      <view class="settings-item" bindtap="navigateToEditProfile">
+        <view class="item-left">
+          <text class="item-icon">👤</text>
+          <text class="item-title">个人资料</text>
+        </view>
+        <view class="item-right">
+          <text class="item-arrow">›</text>
+        </view>
+      </view>
+      
+      <view class="settings-item">
+        <view class="item-left">
+          <text class="item-icon">🔒</text>
+          <text class="item-title">账户安全</text>
+        </view>
+        <view class="item-right">
+          <text class="item-arrow">›</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 通知设置 -->
+    <view class="settings-group">
+      <view class="settings-item">
+        <view class="item-left">
+          <text class="item-icon">🔔</text>
+          <text class="item-title">消息通知</text>
+        </view>
+        <view class="item-right">
+          <switch class="switch" checked="{{notificationEnabled}}" bindchange="toggleNotification"></switch>
+        </view>
+      </view>
+      
+      <view class="settings-item">
+        <view class="item-left">
+          <text class="item-icon">💬</text>
+          <text class="item-title">评论通知</text>
+        </view>
+        <view class="item-right">
+          <switch class="switch" checked="{{commentEnabled}}" bindchange="toggleComment"></switch>
+        </view>
+      </view>
+      
+      <view class="settings-item">
+        <view class="item-left">
+          <text class="item-icon">👍</text>
+          <text class="item-title">点赞通知</text>
+        </view>
+        <view class="item-right">
+          <switch class="switch" checked="{{likeEnabled}}" bindchange="toggleLike"></switch>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 隐私设置 -->
+    <view class="settings-group">
+      <view class="settings-item" bindtap="showPrivacyOptions">
+        <view class="item-left">
+          <text class="item-icon">👁️</text>
+          <text class="item-title">谁可以看我的动态</text>
+        </view>
+        <view class="item-right">
+          <text class="item-text">{{privacyOptionText}}</text>
+          <text class="item-arrow">›</text>
+        </view>
+      </view>
+      
+      <view class="settings-item">
+        <view class="item-left">
+          <text class="item-icon">📍</text>
+          <text class="item-title">位置信息</text>
+        </view>
+        <view class="item-right">
+          <switch class="switch" checked="{{locationEnabled}}" bindchange="toggleLocation"></switch>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 其他设置 -->
+    <view class="settings-group">
+      <view class="settings-item">
+        <view class="item-left">
+          <text class="item-icon">🌙</text>
+          <text class="item-title">深色模式</text>
+        </view>
+        <view class="item-right">
+          <switch class="switch" checked="{{darkModeEnabled}}" bindchange="toggleDarkMode"></switch>
+        </view>
+      </view>
+      
+      <view class="settings-item">
+        <view class="item-left">
+          <text class="item-icon">🗑️</text>
+          <text class="item-title">清除缓存</text>
+        </view>
+        <view class="item-right">
+          <text class="item-text">{{cacheSize}}</text>
+          <text class="item-arrow">›</text>
+        </view>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 退出登录按钮 -->
+  <view class="logout-container">
+    <button class="logout-btn" bindtap="logout">退出登录</button>
+  </view>
+  
+  <!-- 版本信息 -->
+  <view class="version-info">
+    <text>版本 1.0.0</text>
+  </view>
+</view>

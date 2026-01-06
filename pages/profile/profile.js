@@ -62,18 +62,39 @@ Page({
 
   // 编辑资料
   editProfile: function() {
-    wx.showToast({
-      title: '编辑资料功能开发中',
-      icon: 'none'
-    })
+    wx.navigateTo({
+      url: '../edit-profile/edit-profile'
+    });
   },
 
   // 查看我的发布
   viewMyPosts: function() {
+    // 获取当前用户ID
+    const currentUserId = app.globalData.userInfo?.id || 1000
+    
+    // 从全局数据获取所有内容
+    const allContent = app.globalData.contentList || []
+    
+    // 过滤出自己发布的内容
+    const myPosts = allContent.filter(item => item.author?.id === currentUserId)
+    
+    if (myPosts.length === 0) {
+      wx.showToast({
+        title: '您还没有发布任何内容',
+        icon: 'none'
+      })
+      return
+    }
+    
+    // 显示我的发布数量
     wx.showToast({
-      title: '我的发布功能开发中',
+      title: `您发布了 ${myPosts.length} 个内容`,
       icon: 'none'
     })
+    
+    // 这里可以跳转到我的发布列表页
+    // 暂时将我的发布设置为首页的搜索结果
+    app.globalData.myPosts = myPosts
   },
 
   // 查看我的收藏
@@ -148,10 +169,9 @@ Page({
 
   // 打开设置
   openSettings: function() {
-    wx.showToast({
-      title: '设置功能开发中',
-      icon: 'none'
-    })
+    wx.navigateTo({
+      url: '../settings/settings'
+    });
   },
 
   // 关于我们

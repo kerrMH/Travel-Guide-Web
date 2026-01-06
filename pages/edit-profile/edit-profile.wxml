@@ -1,0 +1,90 @@
+<view class="edit-profile-container">
+  <view class="profile-header">
+    <text class="header-title">编辑个人资料</text>
+  </view>
+  
+  <view class="profile-form">
+    <!-- 头像 -->
+    <view class="form-item avatar-item">
+      <view class="item-label">头像</view>
+      <view class="avatar-container">
+        <image class="avatar" src="{{userInfo.avatarUrl}}" mode="aspectFill"></image>
+        <view class="avatar-upload" bindtap="chooseAvatar">
+          <text class="upload-icon">📷</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 昵称 -->
+    <view class="form-item">
+      <view class="item-label">昵称</view>
+      <input class="item-input" placeholder="请输入昵称" value="{{userInfo.nickName}}" bindinput="onNickNameChange" maxlength="20"></input>
+    </view>
+    
+    <!-- 性别 -->
+    <view class="form-item">
+      <view class="item-label">性别</view>
+      <view class="gender-selector">
+        <view class="gender-option {{userInfo.gender === 1 ? 'selected' : ''}}" bindtap="onGenderChange" data-gender="1">
+          <text class="gender-icon">👨</text>
+          <text class="gender-text">男</text>
+        </view>
+        <view class="gender-option {{userInfo.gender === 0 ? 'selected' : ''}}" bindtap="onGenderChange" data-gender="0">
+          <text class="gender-icon">👩</text>
+          <text class="gender-text">女</text>
+        </view>
+        <view class="gender-option {{userInfo.gender === 2 ? 'selected' : ''}}" bindtap="onGenderChange" data-gender="2">
+          <text class="gender-icon">🤷</text>
+          <text class="gender-text">保密</text>
+        </view>
+      </view>
+    </view>
+    
+    <!-- 生日 -->
+    <view class="form-item">
+      <view class="item-label">生日</view>
+      <view class="date-picker" bindtap="showDatePicker">
+        <text class="date-text">{{userInfo.birthday || '请选择生日'}}</text>
+        <text class="date-arrow">›</text>
+      </view>
+    </view>
+    
+    <!-- 所在地 -->
+    <view class="form-item">
+      <view class="item-label">所在地</view>
+      <view class="location-picker" bindtap="showLocationPicker">
+        <text class="location-text">{{userInfo.location || '请选择所在地'}}</text>
+        <text class="location-arrow">›</text>
+      </view>
+    </view>
+    
+    <!-- 个性签名 -->
+    <view class="form-item">
+      <view class="item-label">个性签名</view>
+      <textarea class="item-textarea" placeholder="介绍一下自己吧" value="{{userInfo.signature}}" bindinput="onSignatureChange" maxlength="100" auto-height></textarea>
+      <text class="text-count">{{userInfo.signature.length}}/100</text>
+    </view>
+    
+    <!-- 个人简介 -->
+    <view class="form-item">
+      <view class="item-label">个人简介</view>
+      <textarea class="item-textarea" placeholder="详细介绍一下自己吧" value="{{userInfo.bio}}" bindinput="onBioChange" maxlength="500" auto-height></textarea>
+      <text class="text-count">{{userInfo.bio.length}}/500</text>
+    </view>
+    
+    <!-- 兴趣爱好 -->
+    <view class="form-item">
+      <view class="item-label">兴趣爱好</view>
+      <view class="hobby-tags">
+        <view wx:for="{{hobbies}}" wx:key="index" class="hobby-tag {{userInfo.hobbies.includes(item) ? 'selected' : ''}}" bindtap="toggleHobby" data-hobby="{{item}}">
+          {{item}}
+        </view>
+      </view>
+    </view>
+  </view>
+  
+  <!-- 保存按钮 -->
+  <view class="save-container">
+    <button class="save-btn" bindtap="saveProfile">保存</button>
+  </view>
+</view>

@@ -55,7 +55,7 @@
     <!-- 评论列表 -->
     <view class="comment-list">
       <block wx:if="{{commentList.length > 0}}">
-        <view wx:for="{{commentList}}" wx:key="id" class="comment-item">
+        <view wx:for="{{commentList}}" wx:key="id" class="comment-item" data-id="{{item.id}}" data-index="{{index}}" data-author-id="{{item.author.id}}" data-post-author-id="{{content.authorId}}" bindlongpress="deleteComment">
           <image class="comment-avatar" src="{{item.author.avatar}}" mode="aspectFill"></image>
           <view class="comment-content">
             <view class="comment-header">

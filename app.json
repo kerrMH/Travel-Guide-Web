@@ -5,7 +5,10 @@
     "pages/detail/detail",
     "pages/contact/contact",
     "pages/message/message",
-    "pages/profile/profile"
+    "pages/profile/profile",
+    "pages/settings/settings",
+    "pages/edit-profile/edit-profile",
+    "pages/publish/publish"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -23,6 +26,12 @@
         "text": "发现",
         "iconPath": "images/discover.png",
         "selectedIconPath": "images/discover_active.png"
+      },
+      {
+        "pagePath": "pages/publish/publish",
+        "text": "发布",
+        "iconPath": "images/publish.png",
+        "selectedIconPath": "images/publish_active.png"
       },
       {
         "pagePath": "pages/contact/contact",

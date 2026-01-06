@@ -1,0 +1,99 @@
+<view class="publish-container">
+  <view class="publish-header">
+    <text class="cancel-btn" bindtap="cancelPublish">取消</text>
+    <text class="title">发布旅行分享</text>
+    <text class="publish-btn {{canPublish ? '' : 'disabled'}}" bindtap="submitPublish">发布</text>
+  </view>
+
+  <!-- 内容输入区域 -->
+  <view class="content-section">
+    <input class="title-input" placeholder="请输入标题" value="{{formData.title}}" bindinput="onTitleInput" maxlength="50" />
+    
+    <textarea class="desc-input" placeholder="分享你的旅行故事..." value="{{formData.description}}" bindinput="onDescInput" 
+              maxlength="500" auto-height="{{true}}" show-confirm-bar="{{false}}" />
+  </view>
+
+  <!-- 媒体上传区域 -->
+  <view class="media-section">
+    <view class="section-title">添加图片/视频</view>
+    
+    <!-- 已上传的媒体列表 -->
+    <view class="media-list">
+      <block wx:for="{{formData.mediaList}}" wx:key="index">
+        <view class="media-item" bindtap="previewMedia" data-index="{{index}}">
+          <image wx:if="{{item.type === 'image'}}" src="{{item.url}}" mode="aspectFill"></image>
+          <view wx:else class="video-item">
+            <image src="{{item.coverUrl}}" mode="aspectFill"></image>
+            <view class="video-icon">
+              <text class="iconfont icon-play">▶</text>
+            </view>
+          </view>
+          <view class="delete-btn" catchtap="deleteMedia" data-index="{{index}}">
+            <text class="iconfont icon-delete">✕</text>
+          </view>
+        </view>
+      </block>
+      
+      <!-- 添加按钮 -->
+      <view class="add-media-btn" bindtap="showMediaPicker" wx:if="{{formData.mediaList.length < 9}}">
+        <text class="iconfont icon-add">+</text>
+        <text class="add-text">添加</text>
+      </view>
+    </view>
+    
+    <text class="media-hint">最多可添加9个媒体文件</text>
+  </view>
+
+  <!-- 隐私设置 -->
+  <view class="privacy-section">
+    <view class="section-title">隐私设置</view>
+    <view class="privacy-options">
+      <view class="privacy-option {{formData.privacy === 'public' ? 'selected' : ''}}" bindtap="setPrivacy" data-type="public">
+        <text class="option-text">所有人可见</text>
+        <text class="iconfont icon-check" wx:if="{{formData.privacy === 'public'}}">✓</text>
+      </view>
+      <view class="privacy-option {{formData.privacy === 'friends' ? 'selected' : ''}}" bindtap="setPrivacy" data-type="friends">
+        <text class="option-text">仅关注可见</text>
+        <text class="iconfont icon-check" wx:if="{{formData.privacy === 'friends'}}">✓</text>
+      </view>
+      <view class="privacy-option {{formData.privacy === 'private' ? 'selected' : ''}}" bindtap="setPrivacy" data-type="private">
+        <text class="option-text">私密</text>
+        <text class="iconfont icon-check" wx:if="{{formData.privacy === 'private'}}">✓</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 上传进度提示 -->
+  <view class="upload-progress" wx:if="{{uploading}}">
+    <view class="progress-bar">
+      <view class="progress-fill" style="width: {{uploadProgress}}%"></view>
+    </view>
+    <text class="progress-text">上传中... {{uploadProgress}}%</text>
+  </view>
+</view>
+
+<!-- 媒体选择器 -->
+<view class="media-picker" wx:if="{{showMediaPicker}}">
+  <view class="picker-mask" bindtap="hideMediaPicker"></view>
+  <view class="picker-content">
+    <view class="picker-header">
+      <text class="picker-title">选择媒体</text>
+      <text class="picker-close" bindtap="hideMediaPicker">✕</text>
+    </view>
+    <view class="picker-options">
+      <view class="picker-option" bindtap="chooseImage">
+        <text class="option-icon">📷</text>
+        <text class="option-text">从相册选择</text>
+      </view>
+      <view class="picker-option" bindtap="takePhoto">
+        <text class="option-icon">📸</text>
+        <text class="option-text">拍照</text>
+      </view>
+      <view class="picker-option" bindtap="chooseVideo">
+        <text class="option-icon">🎥</text>
+        <text class="option-text">录制视频</text>
+      </view>
+    </view>
+    <view class="picker-cancel" bindtap="hideMediaPicker">取消</view>
+  </view>
+</view>

@@ -189,6 +189,50 @@ Page({
     })
   },
 
+  // 删除评论
+  deleteComment: function(e) {
+    const { id, index, authorId, postAuthorId } = e.currentTarget.dataset;
+    const currentUserId = app.globalData.userInfo.id || 1000;
+    
+    // 检查权限：只有评论作者或帖子作者可以删除评论
+    if (authorId !== currentUserId && postAuthorId !== currentUserId) {
+      wx.showToast({
+        title: '您没有权限删除此评论',
+        icon: 'none'
+      });
+      return;
+    }
+    
+    // 显示确认对话框
+    wx.showModal({
+      title: '删除评论',
+      content: '确定要删除这条评论吗？',
+      success: (res) => {
+        if (res.confirm) {
+          // 从评论列表中删除
+          const commentList = [...this.data.commentList];
+          commentList.splice(index, 1);
+          
+          // 更新内容评论数
+          const content = {...this.data.content};
+          content.comments--;
+          
+          this.setData({
+            commentList,
+            content
+          });
+          
+          // 显示成功提示
+          wx.showToast({
+            title: '评论已删除',
+            icon: 'success',
+            duration: 1000
+          });
+        }
+      }
+    });
+  },
+
   // 评论输入
   onCommentInput: function(e) {
     this.setData({
@@ -212,7 +256,9 @@ Page({
     const newComment = {
       id: Date.now(),
       content: commentText,
-      author: app.globalData.userInfo,
+      author: app.globalData.userInfo.nickName,
+      authorId: app.globalData.userInfo.id || 1000,
+      avatar: app.globalData.userInfo.avatarUrl,
       createTime: new Date().toLocaleString('zh-CN', { 
         year: 'numeric', 
         month: '2-digit', 

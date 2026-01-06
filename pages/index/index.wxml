@@ -17,7 +17,16 @@
       <view class="waterfall-column left">
         <block wx:for="{{leftColumn}}" wx:key="id">
           <view class="waterfall-item" bindtap="goToDetail" data-id="{{item.id}}">
-            <image class="item-image" src="{{item.coverUrl}}" mode="aspectFill"></image>
+            <!-- 单个图片 -->
+            <image wx:if="{{item.images.length === 1}}" class="item-image" src="{{item.coverUrl}}" mode="aspectFill"></image>
+            <!-- 轮播图 -->
+            <swiper wx:else class="item-swiper" indicator-dots="{{item.images.length > 1}}" autoplay="{{true}}" interval="3000" duration="500">
+              <block wx:for="{{item.images}}" wx:for-item="imageItem" wx:key="index">
+                <swiper-item>
+                  <image class="item-image" src="{{imageItem}}" mode="aspectFill"></image>
+                </swiper-item>
+              </block>
+            </swiper>
             <view class="item-info">
               <view class="item-title">{{item.title}}</view>
               <view class="item-desc">{{item.description}}</view>
@@ -38,7 +47,16 @@
       <view class="waterfall-column right">
         <block wx:for="{{rightColumn}}" wx:key="id">
           <view class="waterfall-item" bindtap="goToDetail" data-id="{{item.id}}">
-            <image class="item-image" src="{{item.coverUrl}}" mode="aspectFill"></image>
+            <!-- 单个图片 -->
+            <image wx:if="{{item.images.length === 1}}" class="item-image" src="{{item.coverUrl}}" mode="aspectFill"></image>
+            <!-- 轮播图 -->
+            <swiper wx:else class="item-swiper" indicator-dots="{{item.images.length > 1}}" autoplay="{{true}}" interval="3000" duration="500">
+              <block wx:for="{{item.images}}" wx:for-item="imageItem" wx:key="index">
+                <swiper-item>
+                  <image class="item-image" src="{{imageItem}}" mode="aspectFill"></image>
+                </swiper-item>
+              </block>
+            </swiper>
             <view class="item-info">
               <view class="item-title">{{item.title}}</view>
               <view class="item-desc">{{item.description}}</view>

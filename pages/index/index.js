@@ -40,11 +40,34 @@ Page({
       // 从全局数据获取内容
       const allContent = app.globalData.contentList
       
-      // 如果有搜索文本，进行过滤
-      let displayList = allContent
+      // 获取当前用户ID和设置
+      const currentUserId = app.globalData.userInfo?.id || 1000
+      const followingAuthors = wx.getStorageSync('followingAuthors') || []
+      
+      // 先根据隐私设置过滤内容
+      let displayList = allContent.filter(item => {
+        // 1. 自己的内容总是可见
+        if (item.author?.id === currentUserId) {
+          return true
+        }
+        
+        // 2. 根据内容的隐私设置判断
+        switch (item.privacy || 0) {
+          case 0: // 所有人可见
+            return true
+          case 1: // 仅关注可见
+            return followingAuthors.includes(item.author?.id)
+          case 2: // 私密
+            return false
+          default:
+            return true
+        }
+      })
+      
+      // 如果有搜索文本，进一步过滤
       if (this.data.searchText) {
         const searchLower = this.data.searchText.toLowerCase()
-        displayList = allContent.filter(item => 
+        displayList = displayList.filter(item => 
           item.title.toLowerCase().includes(searchLower) || 
           item.description.toLowerCase().includes(searchLower) ||
           item.location.toLowerCase().includes(searchLower)
