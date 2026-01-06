@@ -1,49 +1,143 @@
 // index.js
-const defaultAvatarUrl = 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0'
+const app = getApp()
 
 Page({
   data: {
-    motto: 'Hello World',
-    userInfo: {
-      avatarUrl: defaultAvatarUrl,
-      nickName: '',
-    },
-    hasUserInfo: false,
-    canIUseGetUserProfile: wx.canIUse('getUserProfile'),
-    canIUseNicknameComp: wx.canIUse('input.type.nickname'),
+    contentList: [],
+    filteredList: [],
+    leftColumn: [],
+    rightColumn: [],
+    searchText: '',
+    loading: false,
+    hasMore: true,
+    page: 1,
+    pageSize: 10
   },
-  bindViewTap() {
-    wx.navigateTo({
-      url: '../logs/logs'
-    })
+
+  onLoad: function() {
+    // 检查登录状态
+    if (!app.globalData.isLoggedIn) {
+      wx.redirectTo({
+        url: '/pages/login/login'
+      })
+      return
+    }
+    
+    // 加载内容
+    this.loadContent()
   },
-  onChooseAvatar(e) {
-    const { avatarUrl } = e.detail
-    const { nickName } = this.data.userInfo
+
+  // 加载内容
+  loadContent: function() {
+    if (this.data.loading) return
+    
     this.setData({
-      "userInfo.avatarUrl": avatarUrl,
-      hasUserInfo: nickName && avatarUrl && avatarUrl !== defaultAvatarUrl,
+      loading: true
     })
+    
+    // 模拟加载延迟
+    setTimeout(() => {
+      // 从全局数据获取内容
+      const allContent = app.globalData.contentList
+      
+      // 如果有搜索文本，进行过滤
+      let displayList = allContent
+      if (this.data.searchText) {
+        const searchLower = this.data.searchText.toLowerCase()
+        displayList = allContent.filter(item => 
+          item.title.toLowerCase().includes(searchLower) || 
+          item.description.toLowerCase().includes(searchLower) ||
+          item.location.toLowerCase().includes(searchLower)
+        )
+      }
+      
+      // 分页处理
+      const start = 0
+      const end = this.data.page * this.data.pageSize
+      const newList = displayList.slice(start, end)
+      
+      // 更新数据
+      this.setData({
+        contentList: newList,
+        filteredList: displayList,
+        hasMore: end < displayList.length,
+        loading: false
+      })
+      
+      // 生成瀑布流布局
+      this.generateWaterfallLayout()
+    }, 500)
   },
-  onInputChange(e) {
-    const nickName = e.detail.value
-    const { avatarUrl } = this.data.userInfo
-    this.setData({
-      "userInfo.nickName": nickName,
-      hasUserInfo: nickName && avatarUrl && avatarUrl !== defaultAvatarUrl,
-    })
-  },
-  getUserProfile(e) {
-    // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认，开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
-    wx.getUserProfile({
-      desc: '展示用户信息', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
-      success: (res) => {
-        console.log(res)
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
+
+  // 生成瀑布流布局
+  generateWaterfallLayout: function() {
+    const { contentList } = this.data
+    const leftColumn = []
+    const rightColumn = []
+    
+    // 简单的瀑布流布局，奇数放左列，偶数放右列
+    contentList.forEach((item, index) => {
+      if (index % 2 === 0) {
+        leftColumn.push(item)
+      } else {
+        rightColumn.push(item)
       }
     })
+    
+    this.setData({
+      leftColumn,
+      rightColumn
+    })
   },
+
+  // 搜索输入
+  onSearchInput: function(e) {
+    this.setData({
+      searchText: e.detail.value
+    })
+  },
+
+  // 清除搜索
+  clearSearch: function() {
+    this.setData({
+      searchText: ''
+    })
+    this.loadContent()
+  },
+
+  // 搜索
+  onSearch: function() {
+    this.setData({
+      page: 1
+    })
+    this.loadContent()
+  },
+
+  // 加载更多
+  loadMore: function() {
+    if (!this.data.hasMore || this.data.loading) return
+    
+    this.setData({
+      page: this.data.page + 1
+    })
+    
+    this.loadContent()
+  },
+
+  // 跳转到详情页
+  goToDetail: function(e) {
+    const id = e.currentTarget.dataset.id
+    wx.navigateTo({
+      url: `/pages/detail/detail?id=${id}`
+    })
+  },
+
+  // 下拉刷新
+  onPullDownRefresh: function() {
+    this.setData({
+      page: 1
+    })
+    this.loadContent()
+    wx.stopPullDownRefresh()
+  }
 })

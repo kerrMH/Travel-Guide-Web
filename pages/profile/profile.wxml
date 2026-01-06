@@ -1,0 +1,79 @@
+<!-- profile.wxml -->
+<view class="container">
+  <!-- 用户信息区域 -->
+  <view class="user-info-section">
+    <view class="user-header">
+      <image class="avatar" src="{{userInfo.avatar}}" mode="aspectFill"></image>
+      <view class="user-details">
+        <view class="user-name">{{userInfo.nickname}}</view>
+        <view class="user-id">ID: {{userInfo.id}}</view>
+      </view>
+      <button class="edit-btn" bindtap="editProfile">编辑资料</button>
+    </view>
+    
+    <view class="user-stats">
+      <view class="stat-item" bindtap="viewMyPosts">
+        <view class="stat-value">{{myPostsCount}}</view>
+        <view class="stat-label">我的发布</view>
+      </view>
+      <view class="stat-item" bindtap="viewMyCollections">
+        <view class="stat-value">{{myCollectionsCount}}</view>
+        <view class="stat-label">我的收藏</view>
+      </view>
+      <view class="stat-item" bindtap="viewMyLikes">
+        <view class="stat-value">{{myLikesCount}}</view>
+        <view class="stat-label">我的点赞</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 功能菜单 -->
+  <view class="menu-section">
+    <view class="menu-title">旅行工具</view>
+    <view class="menu-grid">
+      <view class="menu-item" bindtap="openTravelGuide">
+        <view class="menu-icon travel-guide-icon"></view>
+        <view class="menu-label">旅行攻略</view>
+      </view>
+      <view class="menu-item" bindtap="openDestination">
+        <view class="menu-icon destination-icon"></view>
+        <view class="menu-label">目的地</view>
+      </view>
+      <view class="menu-item" bindtap="openWeather">
+        <view class="menu-icon weather-icon"></view>
+        <view class="menu-label">天气预报</view>
+      </view>
+      <view class="menu-item" bindtap="openMap">
+        <view class="menu-icon map-icon"></view>
+        <view class="menu-label">地图</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 设置菜单 -->
+  <view class="setting-section">
+    <view class="setting-item" bindtap="openSettings">
+      <view class="setting-icon settings-icon"></view>
+      <view class="setting-label">设置</view>
+      <view class="setting-arrow"></view>
+    </view>
+    <view class="setting-item" bindtap="aboutUs">
+      <view class="setting-icon about-icon"></view>
+      <view class="setting-label">关于我们</view>
+      <view class="setting-arrow"></view>
+    </view>
+    <view class="setting-item" bindtap="feedback">
+      <view class="setting-icon feedback-icon"></view>
+      <view class="setting-label">意见反馈</view>
+      <view class="setting-arrow"></view>
+    </view>
+    <view class="setting-item" bindtap="clearCache">
+      <view class="setting-icon cache-icon"></view>
+      <view class="setting-label">清除缓存</view>
+      <view class="cache-size">{{cacheSize}}</view>
+    </view>
+  </view>
+
+  <!-- 退出登录按钮 -->
+  <button class="logout-btn" bindtap="logout">退出登录</button>
+</view>

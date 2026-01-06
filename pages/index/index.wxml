@@ -1,27 +1,66 @@
-<!--index.wxml-->
-<scroll-view class="scrollarea" scroll-y type="list">
-  <view class="container">
-    <view class="userinfo">
-      <block wx:if="{{canIUseNicknameComp && !hasUserInfo}}">
-        <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
-          <image class="avatar" src="{{userInfo.avatarUrl}}"></image>
-        </button>
-        <view class="nickname-wrapper">
-          <text class="nickname-label">昵称</text>
-          <input type="nickname" class="nickname-input" placeholder="请输入昵称" bind:change="onInputChange" />
-        </view>
-      </block>
-      <block wx:elif="{{!hasUserInfo}}">
-        <button wx:if="{{canIUseGetUserProfile}}" bindtap="getUserProfile"> 获取头像昵称 </button>
-        <view wx:else> 请使用2.10.4及以上版本基础库 </view>
-      </block>
-      <block wx:else>
-        <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-        <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-      </block>
+<!-- index.wxml -->
+<view class="container">
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <view class="search-input">
+      <text class="iconfont icon-search"></text>
+      <input type="text" placeholder="搜索旅行目的地、攻略..." bindinput="onSearchInput" value="{{searchText}}" />
+      <text wx:if="{{searchText}}" class="iconfont icon-clear" bindtap="clearSearch"></text>
     </view>
-    <view class="usermotto">
-      <text class="user-motto">{{motto}}</text>
+    <view class="search-btn" bindtap="onSearch">搜索</view>
+  </view>
+
+  <!-- 内容区域 -->
+  <view class="content-container">
+    <!-- 瀑布流布局 -->
+    <view class="waterfall-container">
+      <view class="waterfall-column left">
+        <block wx:for="{{leftColumn}}" wx:key="id">
+          <view class="waterfall-item" bindtap="goToDetail" data-id="{{item.id}}">
+            <image class="item-image" src="{{item.coverUrl}}" mode="aspectFill"></image>
+            <view class="item-info">
+              <view class="item-title">{{item.title}}</view>
+              <view class="item-desc">{{item.description}}</view>
+              <view class="item-meta">
+                <view class="author-info">
+                  <image class="avatar" src="{{item.author.avatar}}" mode="aspectFill"></image>
+                  <text class="author-name">{{item.author.username}}</text>
+                </view>
+                <view class="item-stats">
+                  <text class="iconfont icon-heart">{{item.likes}}</text>
+                  <text class="iconfont icon-comment">{{item.comments}}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+        </block>
+      </view>
+      <view class="waterfall-column right">
+        <block wx:for="{{rightColumn}}" wx:key="id">
+          <view class="waterfall-item" bindtap="goToDetail" data-id="{{item.id}}">
+            <image class="item-image" src="{{item.coverUrl}}" mode="aspectFill"></image>
+            <view class="item-info">
+              <view class="item-title">{{item.title}}</view>
+              <view class="item-desc">{{item.description}}</view>
+              <view class="item-meta">
+                <view class="author-info">
+                  <image class="avatar" src="{{item.author.avatar}}" mode="aspectFill"></image>
+                  <text class="author-name">{{item.author.username}}</text>
+                </view>
+                <view class="item-stats">
+                  <text class="iconfont icon-heart">{{item.likes}}</text>
+                  <text class="iconfont icon-comment">{{item.comments}}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+        </block>
+      </view>
+    </view>
+
+    <!-- 加载更多 -->
+    <view class="load-more" bindtap="loadMore" wx:if="{{hasMore}}">
+      <text>{{loading ? '加载中...' : '点击加载更多'}}</text>
     </view>
   </view>
-</scroll-view>
+</view>
