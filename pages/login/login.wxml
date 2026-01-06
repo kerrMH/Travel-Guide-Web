@@ -1,0 +1,30 @@
+<!-- login.wxml -->
+<view class="container">
+  <view class="logo-container">
+    <image class="logo" src="https://p3-flow-imagex-sign.byteimg.com/tos-cn-i-a9rns2rl98/rc/pc/super_tool/8bf14f5b98484354ae38443fab09f348~tplv-a9rns2rl98-image.image?rcl=20260106104335C4E475CC0E0D2D762F1C&rk3s=8e244e95&rrcfp=f06b921b&x-expires=1770259451&x-signature=6%2Fysk27g%2FN%2BbqB%2FOne63QQoYLHI%3D"></image>
+    <text class="app-name">旅行分享</text>
+    <text class="slogan">发现世界的美好</text>
+  </view>
+
+  <view class="form-container">
+    <view class="input-group">
+      <text class="iconfont icon-user"></text>
+      <input type="text" placeholder="请输入用户名" value="{{username}}" bindinput="onUsernameInput" />
+    </view>
+    
+    <view class="input-group">
+      <text class="iconfont icon-lock"></text>
+      <input type="password" placeholder="请输入密码" value="{{password}}" bindinput="onPasswordInput" password="{{true}}" />
+    </view>
+
+    <button class="login-btn" bindtap="onLogin">登录</button>
+    
+    <view class="tips">
+      <text>默认账号密码均为 admin</text>
+    </view>
+  </view>
+
+  <view class="footer">
+    <text>© 2023 旅行分享 版权所有</text>
+  </view>
+</view>

@@ -1,0 +1,132 @@
+/* message.wxss */
+.container {
+  background-color: #f8f8f8;
+  padding-bottom: 100rpx;
+}
+
+/* 消息分类标签 */
+.message-tabs {
+  display: flex;
+  background-color: #fff;
+  border-bottom: 1rpx solid #eee;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 30rpx 0;
+  font-size: 28rpx;
+  color: #666;
+  position: relative;
+}
+
+.tab.active {
+  color: #4facfe;
+  font-weight: bold;
+}
+
+.tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 40rpx;
+  height: 4rpx;
+  background-color: #4facfe;
+}
+
+/* 消息列表 */
+.message-list {
+  padding: 20rpx;
+}
+
+.message-item {
+  display: flex;
+  padding: 25rpx;
+  background-color: #fff;
+  border-radius: 15rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 10rpx rgba(0, 0, 0, 0.05);
+}
+
+.message-item.unread {
+  background-color: #f0f8ff;
+}
+
+.message-avatar {
+  position: relative;
+  margin-right: 20rpx;
+}
+
+.avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+}
+
+.unread-dot {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20rpx;
+  height: 20rpx;
+  background-color: #ff4d4f;
+  border-radius: 50%;
+  border: 4rpx solid #fff;
+}
+
+.message-content {
+  flex: 1;
+}
+
+.message-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10rpx;
+}
+
+.message-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.message-time {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.message-text {
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.5;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.no-messages {
+  text-align: center;
+  padding: 60rpx 0;
+  color: #999;
+  font-size: 28rpx;
+}
+
+/* 一键已读按钮 */
+.read-all-btn {
+  position: fixed;
+  bottom: 120rpx;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 20rpx 40rpx;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  border-radius: 30rpx;
+  font-size: 28rpx;
+}

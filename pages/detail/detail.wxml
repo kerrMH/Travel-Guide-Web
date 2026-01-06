@@ -1,0 +1,83 @@
+<!-- detail.wxml -->
+<view class="container">
+  <!-- 内容主体 -->
+  <view class="content-main">
+    <!-- 图片/视频展示 -->
+    <view class="media-container">
+      <image wx:if="{{content.type === 'image'}}" class="content-image" src="{{content.contentUrl}}" mode="aspectFit"></image>
+      <video wx:else class="content-video" src="{{content.contentUrl}}" controls="{{true}}"></video>
+    </view>
+
+    <!-- 内容信息 -->
+    <view class="content-info">
+      <view class="content-title">{{content.title}}</view>
+      <view class="content-description">{{content.description}}</view>
+      
+      <!-- 作者信息 -->
+      <view class="author-info">
+        <image class="avatar" src="{{content.author.avatar}}" mode="aspectFill"></image>
+        <view class="author-details">
+          <view class="author-name">{{content.author.username}}</view>
+          <view class="publish-time">{{content.createTime}} · {{content.location}}</view>
+        </view>
+        <button class="follow-btn" wx:if="{{!isFollowing}}" bindtap="followAuthor">关注</button>
+        <button class="following-btn" wx:else bindtap="unfollowAuthor">已关注</button>
+      </view>
+      
+      <!-- 互动按钮 -->
+      <view class="action-buttons">
+        <view class="action-btn {{isLiked ? 'active' : ''}}" bindtap="toggleLike">
+          <text class="iconfont icon-heart"></text>
+          <text>{{content.likes}}</text>
+        </view>
+        <view class="action-btn {{isCollected ? 'active' : ''}}" bindtap="toggleCollect">
+          <text class="iconfont icon-collect"></text>
+          <text>{{content.collections}}</text>
+        </view>
+        <view class="action-btn" bindtap="shareContent">
+          <text class="iconfont icon-share"></text>
+          <text>分享</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 评论区 -->
+  <view class="comment-section">
+    <view class="section-title">评论 ({{commentList.length}})</view>
+    
+    <!-- 评论输入框 -->
+    <view class="comment-input-container">
+      <input class="comment-input" placeholder="写下你的评论..." value="{{commentText}}" bindinput="onCommentInput" />
+      <button class="send-btn" disabled="{{!commentText}}" bindtap="sendComment">发送</button>
+    </view>
+    
+    <!-- 评论列表 -->
+    <view class="comment-list">
+      <block wx:if="{{commentList.length > 0}}">
+        <view wx:for="{{commentList}}" wx:key="id" class="comment-item">
+          <image class="comment-avatar" src="{{item.author.avatar}}" mode="aspectFill"></image>
+          <view class="comment-content">
+            <view class="comment-header">
+              <view class="comment-author">{{item.author.username}}</view>
+              <view class="comment-time">{{item.createTime}}</view>
+            </view>
+            <view class="comment-text">{{item.content}}</view>
+            <view class="comment-actions">
+              <view class="comment-like {{item.isLiked ? 'active' : ''}}" bindtap="likeComment" data-id="{{item.id}}">
+                <text class="iconfont icon-heart"></text>
+                <text>{{item.likes}}</text>
+              </view>
+              <view class="comment-reply" bindtap="replyComment" data-id="{{item.id}}" data-author="{{item.author.username}}">
+                <text>回复</text>
+              </view>
+            </view>
+          </view>
+        </view>
+      </block>
+      <view wx:else class="no-comments">
+        <text>暂无评论，快来发表第一条评论吧！</text>
+      </view>
+    </view>
+  </view>
+</view>

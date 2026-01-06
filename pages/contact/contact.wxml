@@ -1,0 +1,59 @@
+<!-- contact.wxml -->
+<view class="container">
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <view class="search-input">
+      <text class="iconfont icon-search"></text>
+      <input type="text" placeholder="搜索联系人..." bindinput="onSearchInput" value="{{searchText}}" />
+      <text wx:if="{{searchText}}" class="iconfont icon-clear" bindtap="clearSearch"></text>
+    </view>
+  </view>
+
+  <!-- 添加联系人按钮 -->
+  <view class="add-contact-btn" bindtap="showAddContactDialog">
+    <text class="iconfont icon-add"></text>
+    <text>添加联系人</text>
+  </view>
+
+  <!-- 联系人列表 -->
+  <view class="contact-list">
+    <block wx:if="{{filteredList.length > 0}}">
+      <view wx:for="{{filteredList}}" wx:key="id" class="contact-item" bindtap="viewContactDetail" data-id="{{item.id}}">
+        <image class="avatar" src="{{item.avatar}}" mode="aspectFill"></image>
+        <view class="contact-info">
+          <view class="contact-name">{{item.nickname}}</view>
+          <view class="contact-signature">{{item.signature}}</view>
+        </view>
+        <view class="contact-status">
+          <view wx:if="{{item.followStatus === 2}}" class="mutual-follow">互相关注</view>
+          <view wx:elif="{{item.followStatus === 1}}" class="following">已关注</view>
+          <view wx:else class="not-follow" catchtap="followContact" data-id="{{item.id}}">关注</view>
+        </view>
+      </view>
+    </block>
+    <view wx:else class="no-contacts">
+      <text wx:if="{{searchText}}">没有找到匹配的联系人</text>
+      <text wx:else>暂无联系人，点击上方按钮添加</text>
+    </view>
+  </view>
+
+  <!-- 添加联系人对话框 -->
+  <view class="dialog-mask" wx:if="{{showDialog}}" bindtap="hideAddContactDialog"></view>
+  <view class="dialog" wx:if="{{showDialog}}">
+    <view class="dialog-title">添加联系人</view>
+    <view class="dialog-content">
+      <view class="input-group">
+        <text class="label">用户ID</text>
+        <input type="text" placeholder="请输入用户ID" value="{{newContact.id}}" bindinput="onNewContactIdInput" />
+      </view>
+      <view class="input-group">
+        <text class="label">昵称</text>
+        <input type="text" placeholder="请输入昵称" value="{{newContact.nickname}}" bindinput="onNewContactNicknameInput" />
+      </view>
+    </view>
+    <view class="dialog-buttons">
+      <button class="cancel-btn" bindtap="hideAddContactDialog">取消</button>
+      <button class="confirm-btn" bindtap="addContact">添加</button>
+    </view>
+  </view>
+</view>

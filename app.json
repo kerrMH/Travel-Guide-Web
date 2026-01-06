@@ -1,38 +1,49 @@
 {
-  "entryPagePath": "pages/profile/profile",
   "pages": [
+    "pages/login/login",
     "pages/index/index",
-    "pages/profile/profile",
-    "pages/home/home"
+    "pages/detail/detail",
+    "pages/contact/contact",
+    "pages/message/message",
+    "pages/profile/profile"
   ],
   "window": {
-    "navigationBarBackgroundColor":"#c6e2ff",
-    "backgroundTextStyle":"dark",
-    "navigationBarTextStyle":"black",
-    "navigationBarTitleText": "旅游手册",
-    "enablePullDownRefresh": true,
-    "backgroundColor": "#ccffff"
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "旅行分享",
+    "navigationBarTextStyle": "black"
   },
-  "style": "v2",
-  "componentFramework": "glass-easel",
-  "sitemapLocation": "sitemap.json",
-  "lazyCodeLoading": "requiredComponents",
   "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#1aad19",
+    "backgroundColor": "#ffffff",
     "list": [
       {
-        "pagePath": "pages/home/home",
-        "text": "首页",
-        "iconPath": "assets/"
+        "pagePath": "pages/index/index",
+        "text": "发现",
+        "iconPath": "images/discover.png",
+        "selectedIconPath": "images/discover_active.png"
       },
       {
-      "pagePath": "pages/index/index",
-      "text": "text"
-    },
-  {
-    "pagePath": "pages/profile/profile",
-    "text": "我的"
-  }
- 
-]
-  }
+        "pagePath": "pages/contact/contact",
+        "text": "联系人",
+        "iconPath": "images/contact.png",
+        "selectedIconPath": "images/contact_active.png"
+      },
+      {
+        "pagePath": "pages/message/message",
+        "text": "消息",
+        "iconPath": "images/message.png",
+        "selectedIconPath": "images/message_active.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的",
+        "iconPath": "images/profile.png",
+        "selectedIconPath": "images/profile_active.png"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
 }
